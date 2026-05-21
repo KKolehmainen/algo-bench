@@ -3,10 +3,23 @@
     <body>
         <h1>Algo-bench</h1>
 
-        <p>Kirjaudu sisään</p>
+        {% if session.username %}
+        <p>
+            Olet kirjautunut sisään käyttäjällä {{ session.username }}
+        </p>
+        <p>
+            <a href="/logout">Kirjaudu ulos</a>
+        </p>
+
+        {% else %}
+        
+        <p>
+            <a href="/login_page">Kirjaudu sisään</a>
+        </p>
 
         <p>
             <a href="/register">Luo tunnus</a>
         </p>
+        {% endif %}
     </body>
 </html>
