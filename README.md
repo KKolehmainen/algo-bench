@@ -10,3 +10,19 @@ Sovellus omien algoritmien ja testiajojen tietojen tallentamiseen sekä vertailu
 - Sovellus näyttää käyttäjän tilastoja algoritmeista ja testiajoista
 - Käyttäjä voi vertailla eri algoritmeja sekä testiajoja keskenään
 - Algoritmeja sekä testiajoja voidaan luokitella eri luokkiin
+
+## Sovelluksen asennus
+Asenna `flask`-kirjasto:
+````
+$ pip install flask
+````
+
+Luo tietokannan taulut:
+````
+$ sqlite3 database.db < schema.sql
+````
+
+Käynnistä sovellus:
+````
+$ flask run
+````
