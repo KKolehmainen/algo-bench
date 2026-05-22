@@ -13,43 +13,44 @@ def index():
     algos = algorithms.get_algorithms()
     return render_template("index.html", algos=algos)
 
-@app.route("/new_algorithm", methods=["POST"])
+@app.route("/new_algorithm", methods=["GET", "POST"])
 def new_algorithm():
-    algo_name = request.form["algo_name"]
-    source_code = request.form["source_code"]
-    username = session["username"]
-    algo_id = algorithms.add_algorithm(algo_name, source_code, username)  # user id here!!!
-    return redirect("/algorithm/" + str(algo_id))
-
-@app.route("/new_algorithm_page")
-def new_algorithm_page():
-    return render_template("new_algorithm_page.html")
+    if request.method == "GET":
+        return render_template("new_algorithm.html")
+    
+    if request.method == "POST":
+        algo_name = request.form["algo_name"]
+        source_code = request.form["source_code"]
+        username = session["username"]
+        algo_id = algorithms.add_algorithm(algo_name, source_code, username)  # user id here!!!
+        return redirect("/algorithm/" + str(algo_id))
 
 @app.route("/algorithm/<int:algo_id>")
 def show_algorithm(algo_id):
     algo = algorithms.get_algorithm(algo_id)[0]  # all rows fetched, pick first
     return render_template("algorithm.html", algo=algo)
 
-@app.route("/login_page")
-def login_page():
-    return render_template("login_page.html")
-
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    username = request.form["username"]
-    password = request.form["password"]
 
-    try:
-        sql = "SELECT password_hash FROM users WHERE username = ?"
-        password_hash = db.query(sql, [username])[0][0]
-    except:
-        return "VIRHE: väärä käyttäjätunnus tai salasana" 
+    if request.method == "GET":
+        return render_template("login.html")
+    
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
 
-    if check_password_hash(password_hash, password):
-        session["username"] = username
-        return redirect("/")
-    else:
-        return "VIRHE: väärä käyttäjätunnus tai salasana"
+        try:
+            sql = "SELECT password_hash FROM users WHERE username = ?"
+            password_hash = db.query(sql, [username])[0][0]
+        except:
+            return "VIRHE: väärä käyttäjätunnus tai salasana" 
+
+        if check_password_hash(password_hash, password):
+            session["username"] = username
+            return redirect("/")
+        else:
+            return "VIRHE: väärä käyttäjätunnus tai salasana"
     
 @app.route("/logout")
 def logout():
