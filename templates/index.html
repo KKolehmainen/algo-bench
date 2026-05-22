@@ -8,6 +8,9 @@
             Olet kirjautunut sisään käyttäjällä {{ session.username }}
         </p>
         <p>
+            <a href="/new_algorithm_page">Lisää uusi algoritmi</a>
+        </p>
+        <p>
             <a href="/logout">Kirjaudu ulos</a>
         </p>
 
@@ -21,5 +24,11 @@
             <a href="/register">Luo tunnus</a>
         </p>
         {% endif %}
+
+        <ul>
+            {% for algo in algos %}
+            <li>{{ algo.name }}</li>
+            {% endfor %}
+        </ul>
     </body>
 </html>
