@@ -1,7 +1,7 @@
 import db
 
 def get_algorithms():
-    sql = """SELECT name FROM algorithms"""
+    sql = """SELECT * FROM algorithms"""
     return db.query(sql)
 
 def get_algorithm(algo_id):

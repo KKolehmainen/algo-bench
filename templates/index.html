@@ -27,7 +27,7 @@
 
         <ul>
             {% for algo in algos %}
-            <li>{{ algo.name }}</li>
+            <li><a href="/algorithm/{{ algo.id }}">{{ algo.name }}</a></li>
             {% endfor %}
         </ul>
     </body>
