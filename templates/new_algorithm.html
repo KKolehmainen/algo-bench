@@ -1,6 +1,7 @@
 <html>
     <head>Uusi algoritmi</head>
 
+    {% if session.username %}
     <form action="/new_algorithm" method="post">
         <p>
             Algoritmin nimi:
@@ -12,4 +13,7 @@
         </p>
         <input type="submit" value="Lähetä" />
     </form>
+    {% else %}
+    <p><a href="/login">Kirjaudu</a> sisään lisätäksesi uuden algoritmin</p>
+    {% endif %}
 </html>
