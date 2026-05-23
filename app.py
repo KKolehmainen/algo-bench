@@ -34,7 +34,10 @@ def show_algorithm(algo_id):
 def login():
 
     if request.method == "GET":
-        return render_template("login.html")
+        if session.get("username"):
+            return redirect("/")  # redirect to / if logged in
+        else:
+            return render_template("login.html")
     
     if request.method == "POST":
         username = request.form["username"]
