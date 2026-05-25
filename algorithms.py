@@ -13,3 +13,6 @@ def add_algorithm(name, source_code, username):
     db.execute(sql, [name, source_code, username])
     return db.last_insert_id()
     
+def remove_algorithm(algo_id):
+    sql = "DELETE FROM algorithms WHERE id = ?"
+    db.execute(sql, [algo_id])

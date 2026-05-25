@@ -1,0 +1,11 @@
+<html>
+    <body>
+        <form action="/remove/{{ algo_id }}" method="post">
+            <p>Haluatko varmasti poistaa algoritmin?</p>
+            <input type="submit" value="Poista algoritmi" />
+        </form>
+        <form action="/cancel/{{ algo_id }}" method="post">
+           <input type="submit" value="Peruuta ja palaa" /> 
+        </form>
+    </body>
+</html>

@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
@@ -29,6 +29,25 @@ def new_algorithm():
 def show_algorithm(algo_id):
     algo = algorithms.get_algorithm(algo_id)[0]  # all rows fetched, pick first
     return render_template("algorithm.html", algo=algo)
+
+@app.route("/remove/<int:algo_id>", methods=["GET", "POST"])
+def remove(algo_id):
+
+    algo = algorithms.get_algorithm(algo_id)[0]
+    if algo["username"] != session.get("username"):
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("remove.html", algo_id=algo_id)
+    
+    if request.method == "POST":
+        algorithms.remove_algorithm(algo_id)
+        return redirect("/")
+
+@app.route("/cancel/<int:algo_id>", methods=["POST"])
+def cancel(algo_id):
+    return redirect(f"/algorithm/{algo_id}")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

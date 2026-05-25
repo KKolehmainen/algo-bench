@@ -5,5 +5,11 @@
         <p>{{ algo.name }}</p>
 
         <p>{{ algo.source_code }}</p>
+
+        {% if algo.username == session.username %}
+        <p>
+            <a href="/remove/{{ algo.id }}">Poista</a>
+        </p>
+        {% endif %}
     </body>
 </html>
