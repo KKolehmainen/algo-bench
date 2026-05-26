@@ -46,7 +46,7 @@ def remove(algo_id):
 
 @app.route("/cancel/<int:algo_id>", methods=["POST"])
 def cancel(algo_id):
-    return redirect(f"/algorithm/{algo_id}")
+    return redirect("/algorithm/" + str(algo_id))
 
 @app.route("/edit/<int:algo_id>", methods=["GET", "POST"])
 def edit_algorithm(algo_id):
