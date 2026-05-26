@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <form action="/edit/{{ algo.id }}" method="post">
+            <p>
+                Algoritmin nimi:
+                <br />
+                <input type="text" name="name"  value="{{ algo.name }}"/>
+            </p>
+            <p>
+                Lähdekoodi:
+                <br />
+                <textarea name="source_code" rows="5" cols="40">{{ algo.source_code }}</textarea>
+            </p>
+            <input type="submit" value="Lähetä" />
+        </form>
+        <form action="/cancel/{{ algo.id }}" method="post">
+           <input type="submit" value="Peruuta ja palaa" /> 
+        </form>
+    </body>
+</html>

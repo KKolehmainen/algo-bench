@@ -8,6 +8,7 @@
 
         {% if algo.username == session.username %}
         <p>
+            <a href="/edit/{{ algo.id }}">Muokkaa</a>
             <a href="/remove/{{ algo.id }}">Poista</a>
         </p>
         {% endif %}

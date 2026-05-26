@@ -48,6 +48,21 @@ def remove(algo_id):
 def cancel(algo_id):
     return redirect(f"/algorithm/{algo_id}")
 
+@app.route("/edit/<int:algo_id>", methods=["GET", "POST"])
+def edit_algorithm(algo_id):
+    algo = algorithms.get_algorithm(algo_id)[0]
+
+    if algo["username"] != session.get("username"):
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("edit.html", algo=algo)
+    
+    if request.method == "POST":
+        algo_name = request.form["name"]
+        source_code = request.form["source_code"]
+        algorithms.update_algorithm(algo["id"], algo_name, source_code, session["username"])
+        return redirect("/algorithm/" + str(algo["id"]))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
