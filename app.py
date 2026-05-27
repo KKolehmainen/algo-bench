@@ -63,6 +63,12 @@ def edit_algorithm(algo_id):
         source_code = request.form["source_code"]
         algorithms.update_algorithm(algo["id"], algo_name, source_code, session["username"])
         return redirect("/algorithm/" + str(algo["id"]))
+    
+@app.route("/search")
+def search():
+    query = request.args.get("query")
+    results = algorithms.search_algorithms(query) if query else []
+    return render_template("search.html", query=query, results=results)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

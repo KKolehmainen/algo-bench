@@ -20,3 +20,8 @@ def remove_algorithm(algo_id):
 def update_algorithm(algo_id, name, source_code, username):
     sql = "UPDATE algorithms SET name = ?, source_code = ?, username = ? WHERE id = ?"
     db.execute(sql, [name, source_code, username, algo_id])
+
+def search_algorithms(query):
+    sql = "SELECT * FROM algorithms WHERE name LIKE ? or source_code LIKE ?"
+    query_str = "%" + query + "%"
+    return db.query(sql, [query_str, query_str])
