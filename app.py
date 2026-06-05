@@ -38,6 +38,10 @@ def show_algorithm(algo_id):
 def remove(algo_id):
 
     algo = algorithms.get_algorithm(algo_id)
+
+    if not algo:
+        abort(404)
+
     if algo["username"] != session.get("username"):
         abort(403)
 
@@ -55,6 +59,9 @@ def cancel(algo_id):
 @app.route("/edit/<int:algo_id>", methods=["GET", "POST"])
 def edit_algorithm(algo_id):
     algo = algorithms.get_algorithm(algo_id)
+
+    if not algo:
+        abort(404)
 
     if algo["username"] != session.get("username"):
         abort(403)
