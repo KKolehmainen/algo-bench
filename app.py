@@ -89,9 +89,9 @@ def search():
     results = algorithms.search_algorithms(query) if query else []
     return render_template("search.html", query=query, results=results)
 
-@app.route("/user/<int:user_id>")
-def show_user(user_id):
-    username = users.get_user(user_id)[0]
+@app.route("/user/<string:username>")
+def show_user(username):
+    #username = users.get_user(user_id)[0]
     algos = users.get_algorithms_by_user(username)
     return render_template("user.html", username=username, algos=algos)
 

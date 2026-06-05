@@ -2,9 +2,14 @@
     <head>Algoritmi</head>
 
     <body>
-        <p>{{ algo.name }}</p>
+        <p>Algoritmin nimi: {{ algo.name }}</p>
 
-        <p>{{ algo.source_code }}</p>
+        <p>
+            Lisännyt käyttäjä: 
+            <a href="/user/{{ algo.username }}">{{ algo.username }}</a>
+        </p>
+
+        <p>Lähdekoodi: {{ algo.source_code }}</p>
         
         {% if classes %}
         <p>
