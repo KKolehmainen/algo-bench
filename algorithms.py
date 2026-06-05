@@ -6,7 +6,8 @@ def get_algorithms():
 
 def get_algorithm(algo_id):
     sql = "SELECT * FROM algorithms WHERE id = ?"
-    return db.query(sql, [algo_id])
+    result = db.query(sql, [algo_id])
+    return result[0] if result else None
 
 def add_algorithm(name, source_code, username):
     sql = """INSERT INTO algorithms (name, source_code, username) VALUES (?, ?, ?)"""
