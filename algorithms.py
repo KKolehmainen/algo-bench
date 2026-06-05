@@ -24,6 +24,9 @@ def get_classes(algo_id):
     return db.query(sql, [algo_id])
     
 def remove_algorithm(algo_id):
+    sql = "DELETE FROM algorithm_classes WHERE algo_id = ?"
+    db.execute(sql, [algo_id])
+    
     sql = "DELETE FROM algorithms WHERE id = ?"
     db.execute(sql, [algo_id])
 

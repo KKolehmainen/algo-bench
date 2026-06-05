@@ -1,6 +1,7 @@
 import sqlite3
 from flask import Flask, render_template, request, redirect, session, abort
 from werkzeug.security import generate_password_hash, check_password_hash
+import secrets
 import db
 import config
 import algorithms
@@ -20,6 +21,7 @@ def new_algorithm():
         return render_template("new_algorithm.html")
     
     if request.method == "POST":
+        check_csrf()
         algo_name = request.form["algo_name"]
         source_code = request.form["source_code"]
         language = request.form["language"]
@@ -55,6 +57,7 @@ def remove(algo_id):
         return render_template("remove.html", algo_id=algo_id)
     
     if request.method == "POST":
+        check_csrf()
         algorithms.remove_algorithm(algo_id)
         return redirect("/")
 
@@ -76,6 +79,7 @@ def edit_algorithm(algo_id):
         return render_template("edit.html", algo=algo)
     
     if request.method == "POST":
+        check_csrf()
         algo_name = request.form["name"]
         source_code = request.form["source_code"]
         if not algo_name or len(algo_name) > 100 or len(source_code) > 10000:
@@ -116,6 +120,7 @@ def login():
 
         if check_password_hash(password_hash, password):
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             return "VIRHE: väärä käyttäjätunnus tai salasana"
@@ -123,6 +128,7 @@ def login():
 @app.route("/logout")
 def logout():
     del session["username"]
+    del session["csrf_token"]
     return redirect("/")
 
 @app.route("/register")
@@ -146,3 +152,7 @@ def create():
         return "VIRHE: käyttäjätunnus on jo varattu"
     
     return "Tunnus luotu"
+
+def check_csrf():
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)

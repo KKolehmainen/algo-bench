@@ -11,6 +11,7 @@
                 <br />
                 <textarea name="source_code" rows="5" cols="40" maxlength="10000" required>{{ algo.source_code }}</textarea>
             </p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
             <input type="submit" value="Lähetä" />
         </form>
         <form action="/cancel/{{ algo.id }}" method="post">
