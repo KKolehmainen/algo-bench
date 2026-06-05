@@ -6,5 +6,5 @@ def get_user(user_id):
     return result[0] if result else None
 
 def get_algorithms_by_user(username):
-    sql = "SELECT name FROM algorithms WHERE username = ?"
+    sql = "SELECT id, name FROM algorithms WHERE username = ?"
     return db.query(sql, [username])

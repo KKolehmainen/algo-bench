@@ -1,0 +1,20 @@
+<html>
+    <h1>Käyttäjä {{ username }}</h1>
+
+    <body>
+        <p>
+            Käyttäjällä on {{ algos | count }} algoritmia
+        </p>
+
+        {% if algos %}
+        <p>
+            Käyttäjän algoritmit:
+            <ul>
+                {% for algo in algos %}
+                <li><a href="/algorithm/{{ algo.id }}">{{ algo.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </p>
+        {% endif %}
+    </body>
+</html>

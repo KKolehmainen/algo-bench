@@ -4,13 +4,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
 import algorithms
+import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    algos = algorithms.get_algorithms()
+    algos = algorithms.get_all_algorithms()
     return render_template("index.html", algos=algos)
 
 @app.route("/new_algorithm", methods=["GET", "POST"])
@@ -87,6 +88,12 @@ def search():
     query = request.args.get("query")
     results = algorithms.search_algorithms(query) if query else []
     return render_template("search.html", query=query, results=results)
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    username = users.get_user(user_id)[0]
+    algos = users.get_algorithms_by_user(username)
+    return render_template("user.html", username=username, algos=algos)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
