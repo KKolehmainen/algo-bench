@@ -23,6 +23,9 @@
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Lähetä" />
     </form>
+    <p>
+        <a href="/">Etusivulle</a>
+    </p>
     {% else %}
     <p><a href="/login">Kirjaudu</a> sisään lisätäksesi uuden algoritmin</p>
     {% endif %}
