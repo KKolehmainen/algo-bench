@@ -1,6 +1,6 @@
 import db
 
-def get_algorithms():
+def get_all_algorithms():
     sql = """SELECT * FROM algorithms"""
     return db.query(sql)
 
