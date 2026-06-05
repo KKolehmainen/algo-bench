@@ -22,6 +22,8 @@ def new_algorithm():
         algo_name = request.form["algo_name"]
         source_code = request.form["source_code"]
         username = session["username"]
+        if not algo_name or len(algo_name) > 100 or len(source_code) > 10000:
+            abort(403)
         algo_id = algorithms.add_algorithm(algo_name, source_code, username)  # user id here!!!
         return redirect("/algorithm/" + str(algo_id))
 

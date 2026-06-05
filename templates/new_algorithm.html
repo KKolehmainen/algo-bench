@@ -5,11 +5,11 @@
     <form action="/new_algorithm" method="post">
         <p>
             Algoritmin nimi:
-            <input type="text" name="algo_name" />
+            <input type="text" name="algo_name" maxlength="100" required/>
         </p>
         <p>
             Lähdekoodi:
-            <textarea name="source_code" rows="5" cols="40"></textarea>
+            <textarea name="source_code" rows="5" cols="40" maxlength="10000" required></textarea>
         </p>
         <input type="submit" value="Lähetä" />
     </form>
