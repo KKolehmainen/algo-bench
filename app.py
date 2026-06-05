@@ -21,18 +21,23 @@ def new_algorithm():
     if request.method == "POST":
         algo_name = request.form["algo_name"]
         source_code = request.form["source_code"]
+        language = request.form["language"]
+        classes = []
+        if language:
+            classes.append(("Ohjelmointikieli", language))
         username = session["username"]
         if not algo_name or len(algo_name) > 100 or len(source_code) > 10000:
             abort(403)
-        algo_id = algorithms.add_algorithm(algo_name, source_code, username)  # user id here!!!
+        algo_id = algorithms.add_algorithm(algo_name, source_code, username, classes)  # user id here!!!
         return redirect("/algorithm/" + str(algo_id))
 
 @app.route("/algorithm/<int:algo_id>")
 def show_algorithm(algo_id):
     algo = algorithms.get_algorithm(algo_id)
+    classes = algorithms.get_classes(algo_id)
     if not algo:
         abort(404)
-    return render_template("algorithm.html", algo=algo)
+    return render_template("algorithm.html", algo=algo, classes=classes)
 
 @app.route("/remove/<int:algo_id>", methods=["GET", "POST"])
 def remove(algo_id):
