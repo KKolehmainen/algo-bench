@@ -1,11 +1,11 @@
 import db
 
 def get_all_algorithms():
-    sql = """SELECT * FROM algorithms"""
+    sql = """SELECT id, name FROM algorithms"""
     return db.query(sql)
 
 def get_algorithm(algo_id):
-    sql = "SELECT * FROM algorithms WHERE id = ?"
+    sql = "SELECT id, name, source_code, username FROM algorithms WHERE id = ?"
     result = db.query(sql, [algo_id])
     return result[0] if result else None
 
@@ -26,7 +26,7 @@ def get_classes(algo_id):
 def remove_algorithm(algo_id):
     sql = "DELETE FROM algorithm_classes WHERE algo_id = ?"
     db.execute(sql, [algo_id])
-    
+
     sql = "DELETE FROM algorithms WHERE id = ?"
     db.execute(sql, [algo_id])
 
@@ -35,6 +35,6 @@ def update_algorithm(algo_id, name, source_code, username):
     db.execute(sql, [name, source_code, username, algo_id])
 
 def search_algorithms(query):
-    sql = "SELECT * FROM algorithms WHERE name LIKE ? or source_code LIKE ?"
+    sql = "SELECT id, name, source_code, username FROM algorithms WHERE name LIKE ? or source_code LIKE ?"
     query_str = "%" + query + "%"
     return db.query(sql, [query_str, query_str])
