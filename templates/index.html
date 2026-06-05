@@ -5,7 +5,7 @@
 
         {% if session.username %}
         <p>
-            Olet kirjautunut sisään käyttäjällä {{ session.username }}
+            Olet kirjautunut sisään käyttäjällä <a href="/user/{{ session.username }}">{{ session.username }}</a>
         </p>
         <p>
             <a href="/new_algorithm">Lisää uusi algoritmi</a>
