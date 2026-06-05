@@ -9,10 +9,19 @@ def get_algorithm(algo_id):
     result = db.query(sql, [algo_id])
     return result[0] if result else None
 
-def add_algorithm(name, source_code, username):
+def add_algorithm(name, source_code, username, classes):
     sql = """INSERT INTO algorithms (name, source_code, username) VALUES (?, ?, ?)"""
     db.execute(sql, [name, source_code, username])
-    return db.last_insert_id()
+    algo_id = db.last_insert_id()
+
+    sql = "INSERT INTO algorithm_classes (algo_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql, [algo_id, title, value])
+    return algo_id
+
+def get_classes(algo_id):
+    sql = "SELECT title, value FROM algorithm_classes WHERE algo_id = ?"
+    return db.query(sql, [algo_id])
     
 def remove_algorithm(algo_id):
     sql = "DELETE FROM algorithms WHERE id = ?"
