@@ -63,6 +63,8 @@ def edit_algorithm(algo_id):
     if request.method == "POST":
         algo_name = request.form["name"]
         source_code = request.form["source_code"]
+        if not algo_name or len(algo_name) > 100 or len(source_code) > 10000:
+            abort(403)
         algorithms.update_algorithm(algo["id"], algo_name, source_code, session["username"])
         return redirect("/algorithm/" + str(algo["id"]))
     
