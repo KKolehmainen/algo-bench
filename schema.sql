@@ -10,3 +10,10 @@ CREATE TABLE algorithms (
     source_code TEXT,
     username TEXT
 );
+
+CREATE TABlE algorithm_classes (
+    id INTEGER PRIMARY KEY,
+    algo_id INTEGER REFERENCES algorithms,
+    title TEXT,
+    value TEXT
+);
