@@ -12,13 +12,15 @@
             <textarea name="source_code" rows="5" cols="40" maxlength="10000" required></textarea>
         </p>
         <p>
-            Ohjelmointikieli:
-            <select name="language">
+            {% for class in all_classes %}
+                {{ class }}:
+                <select name="classes">
                 <option value="">(valitse)</option>
-                <option value="Python">Python</option>
-                <option value="C">C</option>
-                <option value="Java">Java</option>
-            </select>
+                {% for option in all_classes[class] %}
+                <option value="{{ class }}:{{ option }}">{{ option }}</option>
+                {% endfor %}
+                </select>
+            {% endfor %}
         </p>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Lähetä" />

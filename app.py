@@ -17,21 +17,27 @@ def index():
 
 @app.route("/new_algorithm", methods=["GET", "POST"])
 def new_algorithm():
+    all_classes = algorithms.get_all_classes()
+
     if request.method == "GET":
-        return render_template("new_algorithm.html")
+        return render_template("new_algorithm.html", all_classes=all_classes)
     
     if request.method == "POST":
         check_csrf()
         algo_name = request.form["algo_name"]
         source_code = request.form["source_code"]
-        language = request.form["language"]
+        input_classes = request.form.getlist("classes")
+        print(input_classes)
         classes = []
-        if language:
-            classes.append(("Ohjelmointikieli", language))
+        if input_classes:
+            for entry in input_classes:
+                splitted = entry.split(":")
+                classes.append((splitted[0], splitted[1]))
+        print(classes)
         username = session["username"]
         if not algo_name or len(algo_name) > 100 or len(source_code) > 10000:
             abort(403)
-        algo_id = algorithms.add_algorithm(algo_name, source_code, username, classes)  # user id here!!!
+        algo_id = algorithms.add_algorithm(algo_name, source_code, username, classes)
         return redirect("/algorithm/" + str(algo_id))
 
 @app.route("/algorithm/<int:algo_id>")

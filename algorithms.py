@@ -38,3 +38,16 @@ def search_algorithms(query):
     sql = "SELECT id, name, source_code, username FROM algorithms WHERE name LIKE ? or source_code LIKE ?"
     query_str = "%" + query + "%"
     return db.query(sql, [query_str, query_str])
+
+def get_all_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    result = db.query(sql, )
+
+    classes = {}
+    for title, value in result:
+        classes[title] = []
+
+    for title, value in result:
+        classes[title].append(value)
+
+    return classes
