@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect, session, abort
+from flask import Flask, render_template, request, redirect, session, abort, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import markupsafe
 import secrets
@@ -138,27 +138,27 @@ def logout():
     del session["csrf_token"]
     return redirect("/")
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
-
-@app.route("/create", methods=["POST"])
-def create():
-    username = request.form["username"]
-    password1 = request.form["password1"]
-    password2 = request.form["password2"]
-
-    if password1 != password2:
-        return "VIRHE: salasanat eivät täsmänneet"
-    password_hash = generate_password_hash(password1)
-
-    try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-        db.execute(sql, [username, password_hash])
-    except sqlite3.IntegrityError:
-        return "VIRHE: käyttäjätunnus on jo varattu"
+    if request.method == "GET":
+        return render_template("register.html")
     
-    return "Tunnus luotu"
+    if request.method == "POST":
+        username = request.form["username"]
+        password1 = request.form["password1"]
+        password2 = request.form["password2"]
+
+        if password1 != password2:
+            return "VIRHE: salasanat eivät täsmänneet"
+        password_hash = generate_password_hash(password1)
+
+        try:
+            sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
+            db.execute(sql, [username, password_hash])
+        except sqlite3.IntegrityError:
+            return "VIRHE: käyttäjätunnus on jo varattu"
+        
+        return "Tunnus luotu"
 
 def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:
