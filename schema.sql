@@ -17,3 +17,10 @@ CREATE TABlE algorithm_classes (
     title TEXT,
     value TEXT
 );
+
+CREATE TABLE classes (
+    id INTEGER PRIMARY KEY,
+    algo_id INTEGER REFERENCES algorithms,
+    title TEXT,
+    value TEXT
+)
