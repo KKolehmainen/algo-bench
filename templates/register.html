@@ -16,6 +16,11 @@
                 Salasana uudestaan:
                 <input type="password" name="password2" />
             </p>
+            {% for message in get_flashed_messages() %}
+            <p>
+                <b>{{ message }}</b>
+            </p>
+            {% endfor %}
             <input type="submit" value="Luo tunnus" />
         </form>
     </body>

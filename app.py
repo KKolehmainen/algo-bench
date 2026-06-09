@@ -149,16 +149,19 @@ def register():
         password2 = request.form["password2"]
 
         if password1 != password2:
-            return "VIRHE: salasanat eivät täsmänneet"
+            flash("VIRHE: salasanat eivät täsmänneet")
+            return redirect("/register")
         password_hash = generate_password_hash(password1)
 
         try:
             sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
             db.execute(sql, [username, password_hash])
         except sqlite3.IntegrityError:
-            return "VIRHE: käyttäjätunnus on jo varattu"
+            flash("VIRHE: käyttäjätunnus on jo varattu")
+            return redirect("/register")
         
-        return "Tunnus luotu"
+        flash("Tunnus luotu!")
+        return redirect("/")
 
 def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:

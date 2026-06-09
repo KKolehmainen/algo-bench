@@ -15,6 +15,12 @@
         </p>
 
         {% else %}
+
+        {% for message in get_flashed_messages() %}
+            <p>
+                <b>{{ message }}</b>
+            </p>
+        {% endfor %}
         
         <p>
             <a href="/login">Kirjaudu sisään</a>
