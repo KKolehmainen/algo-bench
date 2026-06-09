@@ -11,6 +11,16 @@ CREATE TABLE algorithms (
     username TEXT
 );
 
+CREATE TABLE benchmarks (
+    id INTEGER PRIMARY KEY,
+    input TEXT,
+    execution_time FLOAT,
+    metadata TEXT,
+    sent_at TEXT,
+    user_id INTEGER REFERENCES users,
+    algo_id INTEGER REFERENCES algorithms
+);
+
 CREATE TABlE algorithm_classes (
     id INTEGER PRIMARY KEY,
     algo_id INTEGER REFERENCES algorithms,
@@ -23,4 +33,4 @@ CREATE TABLE classes (
     algo_id INTEGER REFERENCES algorithms,
     title TEXT,
     value TEXT
-)
+);
