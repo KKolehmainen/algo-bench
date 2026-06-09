@@ -1,6 +1,7 @@
 import sqlite3
 from flask import Flask, render_template, request, redirect, session, abort
 from werkzeug.security import generate_password_hash, check_password_hash
+import markupsafe
 import secrets
 import db
 import config
@@ -162,3 +163,10 @@ def create():
 def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    content = content.replace(" ", "&nbsp;")
+    return markupsafe.Markup(f"<pre>{content}</pre>")

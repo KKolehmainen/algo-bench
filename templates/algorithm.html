@@ -9,7 +9,10 @@
             <a href="/user/{{ algo.username }}">{{ algo.username }}</a>
         </p>
 
-        <p>Lähdekoodi: {{ algo.source_code }}</p>
+        <p>Lähdekoodi:
+            <br />
+            {{ algo.source_code | show_lines }}
+        </p>
         
         {% if classes %}
         <p>
