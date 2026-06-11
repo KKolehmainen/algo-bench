@@ -31,7 +31,10 @@
             <br />
             <ul>
                 {% for benchmark in benchmarks %}
-                <li>{{ benchmark.metadata}}</li>
+                <li>
+                    {{ benchmark.metadata}} - lisännyt <a href="/user/{{ benchmark.username }}">{{ benchmark.username }}</a>
+                    ({{ benchmark.sent_at }})
+                </li>
                 {% endfor %}
             </ul>
         </p>
