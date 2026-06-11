@@ -51,3 +51,14 @@ def get_all_classes():
         classes[title].append(value)
 
     return classes
+
+def add_benchmark(user_id, algo_id, name, execution_time, metadata):
+    sql = """INSERT INTO benchmarks
+             (name, execution_time, metadata, sent_at, user_id, algo_id)
+             VALUES (?, ?, ?, datetime('now'), ?, ?)"""
+    db.execute(sql, [name, execution_time, metadata, user_id, algo_id])
+
+def get_benchmarks_for_algo(algo_id):
+    sql = "SELECT name, execution_time, metadata, sent_at, user_id FROM benchmarks WHERE algo_id = ?"
+    result = db.query(sql, [algo_id])
+    return result #if result else None

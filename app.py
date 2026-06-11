@@ -44,9 +44,10 @@ def new_algorithm():
 def show_algorithm(algo_id):
     algo = algorithms.get_algorithm(algo_id)
     classes = algorithms.get_classes(algo_id)
+    benchmarks = algorithms.get_benchmarks_for_algo(algo_id)
     if not algo:
         abort(404)
-    return render_template("algorithm.html", algo=algo, classes=classes)
+    return render_template("algorithm.html", algo=algo, classes=classes, benchmarks=benchmarks)
 
 @app.route("/remove/<int:algo_id>", methods=["GET", "POST"])
 def remove(algo_id):
@@ -66,6 +67,28 @@ def remove(algo_id):
         check_csrf()
         algorithms.remove_algorithm(algo_id)
         return redirect("/")
+    
+@app.route("/new_benchmark", methods=["POST"])
+def new_benchmark():
+
+    if request.method == "POST":
+        check_csrf()
+        benchmark_name = request.form["benchmark_name"]
+        execution_time = float(request.form["execution_time"])
+        metadata = request.form["metadata"]
+        username = session["username"]
+        user_id = users.get_user_id(username)[0]
+        algo_id = int(request.form["algo_id"])
+
+        print(type(user_id))
+
+        if not execution_time or len(benchmark_name) > 100 or len(metadata) > 1000:
+            abort(403)
+        try:
+            algorithms.add_benchmark(user_id, algo_id, benchmark_name, execution_time, metadata)
+        except sqlite3.IntegrityError:
+            abort(403)
+        return redirect("/algorithm/" + str(algo_id))
 
 @app.route("/cancel/<int:algo_id>", methods=["POST"])
 def cancel(algo_id):

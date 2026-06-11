@@ -25,6 +25,41 @@
         </p>
         {% endif %}
 
+        {% if benchmarks %}
+        <p>
+            Testiajot:
+            <br />
+            <ul>
+                {% for benchmark in benchmarks %}
+                <li>{{ benchmark.metadata}}</li>
+                {% endfor %}
+            </ul>
+        </p>
+        {% endif %}
+
+        {% if session.username %}
+        <h2>Uusi testiajo</h2>
+
+        <form action="/new_benchmark" method="post">
+            <p>
+                Testiajon nimi:
+                <input type="text" name="benchmark_name" maxlength="100" required/>
+            </p>
+            <p>
+                Ajoaika:
+                <input type="number" name="execution_time" required/>
+            </p>
+            <p>
+                Ajon tiedot (argumentit, alustan tiedot, ...):<br />
+                <textarea name="metadata" rows="5" cols="40" maxlength="10000" required></textarea>
+            </p>
+
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            <input type="hidden" name="algo_id" value="{{ algo.id }}" />
+            <input type="submit" value="Lähetä" />
+        </form>
+        {% endif %}
+
         {% if algo.username == session.username %}
         <p>
             <a href="/edit/{{ algo.id }}">Muokkaa</a>

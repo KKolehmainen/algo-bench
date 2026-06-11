@@ -13,7 +13,7 @@ CREATE TABLE algorithms (
 
 CREATE TABLE benchmarks (
     id INTEGER PRIMARY KEY,
-    input TEXT,
+    name TEXT,
     execution_time FLOAT,
     metadata TEXT,
     sent_at TEXT,
