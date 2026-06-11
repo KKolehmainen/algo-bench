@@ -74,7 +74,8 @@ def new_benchmark():
     if request.method == "POST":
         check_csrf()
         benchmark_name = request.form["benchmark_name"]
-        execution_time = float(request.form["execution_time"])
+        execution_time = request.form["execution_time"]
+        execution_time = validate_float(execution_time)
         metadata = request.form["metadata"]
         username = session["username"]
         user_id = users.get_user_id(username)[0]
@@ -184,6 +185,14 @@ def register():
 def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
+    
+def validate_float(input):
+    try:
+        return float(input)
+    except ValueError:
+        abort(403)
+
+    
 
 @app.template_filter()
 def show_lines(content):

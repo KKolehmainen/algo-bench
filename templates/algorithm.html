@@ -46,8 +46,8 @@
                 <input type="text" name="benchmark_name" maxlength="100" required/>
             </p>
             <p>
-                Ajoaika:
-                <input type="number" name="execution_time" required/>
+                Ajoaika (s):
+                <input type="text" name="execution_time" required pattern="^\d+(\.\d{1,10})?$"/>
             </p>
             <p>
                 Ajon tiedot (argumentit, alustan tiedot, ...):<br />
