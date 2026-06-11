@@ -125,8 +125,10 @@ def search():
 @app.route("/user/<string:username>")
 def show_user(username):
     #username = users.get_user(user_id)[0]
+    user_id = users.get_user_id(username)[0]
     algos = users.get_algorithms_by_user(username)
-    return render_template("user.html", username=username, algos=algos)
+    benchmarks = users.get_benchmarks_by_user(user_id)
+    return render_template("user.html", username=username, algos=algos, benchmarks=benchmarks)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

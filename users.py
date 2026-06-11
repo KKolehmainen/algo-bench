@@ -15,6 +15,10 @@ def get_algorithms_by_user(username):
     sql = "SELECT id, name FROM algorithms WHERE username = ?"
     return db.query(sql, [username])
 
+def get_benchmarks_by_user(user_id):
+    sql = "SELECT id, name FROM benchmarks WHERE user_id = ?"
+    return db.query(sql, [user_id])
+
 def create_user(username, password):
     password_hash = generate_password_hash(password)
     sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
