@@ -61,4 +61,4 @@ def add_benchmark(user_id, algo_id, name, execution_time, metadata):
 def get_benchmarks_for_algo(algo_id):
     sql = "SELECT name, execution_time, metadata, sent_at, user_id FROM benchmarks WHERE algo_id = ?"
     result = db.query(sql, [algo_id])
-    return result #if result else None
+    return result if result else None
