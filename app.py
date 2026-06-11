@@ -27,13 +27,13 @@ def new_algorithm():
         algo_name = request.form["algo_name"]
         source_code = request.form["source_code"]
         input_classes = request.form.getlist("classes")
-        print(input_classes)
+
         classes = []
         if input_classes:
             for entry in input_classes:
                 splitted = entry.split(":")
                 classes.append((splitted[0], splitted[1]))
-        print(classes)
+
         username = session["username"]
         if not algo_name or len(algo_name) > 100 or len(source_code) > 10000:
             abort(403)
@@ -80,8 +80,6 @@ def new_benchmark():
         username = session["username"]
         user_id = users.get_user_id(username)[0]
         algo_id = int(request.form["algo_id"])
-
-        print(type(user_id))
 
         if not execution_time or len(benchmark_name) > 100 or len(metadata) > 1000:
             abort(403)
