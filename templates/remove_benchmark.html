@@ -1,0 +1,12 @@
+<html>
+    <body>
+        <form action="/remove_benchmark/{{ benchmark_id }}" method="post">
+            <p>Haluatko varmasti poistaa testiajon?</p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            <input type="submit" value="Poista testiajo" />
+        </form>
+        <form action="/cancel_benchmark/{{ benchmark_id }}" method="post">
+           <input type="submit" value="Peruuta ja palaa" /> 
+        </form>
+    </body>
+</html>

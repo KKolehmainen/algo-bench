@@ -71,3 +71,7 @@ def get_benchmark(benchmark_id):
             users u WHERE u.id = b.user_id AND b.id = ? """
     result = db.query(sql, [benchmark_id])
     return result[0] if result else None
+
+def remove_benchmark(benchmark_id):
+    sql = "DELETE FROM benchmarks WHERE id = ?"
+    db.execute(sql, [benchmark_id])

@@ -95,10 +95,33 @@ def new_benchmark():
         except sqlite3.IntegrityError:
             abort(403)
         return redirect("/algorithm/" + str(algo_id))
+    
+@app.route("/remove_benchmark/<int:benchmark_id>", methods=["GET", "POST"])
+def remove_benchmark(benchmark_id):
+
+    benchmark = algorithms.get_benchmark(benchmark_id)
+
+    if not benchmark:
+        abort(404)
+
+    if benchmark["username"] != session.get("username"):
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("remove_benchmark.html", benchmark_id=benchmark_id)
+    
+    if request.method == "POST":
+        check_csrf()
+        algorithms.remove_benchmark(benchmark_id)
+        return redirect("/")
 
 @app.route("/cancel/<int:algo_id>", methods=["POST"])
 def cancel(algo_id):
     return redirect("/algorithm/" + str(algo_id))
+
+@app.route("/cancel_benchmark/<int:benchmark_id>", methods=["POST"])
+def cancel_benchmark(benchmark_id):
+    return redirect("/benchmark/" + str(benchmark_id))
 
 @app.route("/edit/<int:algo_id>", methods=["GET", "POST"])
 def edit_algorithm(algo_id):
