@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <form action="/edit_benchmark/{{ benchmark.id }}" method="post">
+            <p>
+                Testiajon nimi:
+                <input type="text" name="benchmark_name" value="{{ benchmark.name }}" maxlength="100" required/>
+            </p>
+            <p>
+                Ajoaika (s):
+                <input type="text" name="execution_time" value="{{ benchmark.execution_time }}" required pattern="^\d+(\.\d{1,10})?$"/>
+            </p>
+            <p>
+                Ajon tiedot (argumentit, alustan tiedot, ...):<br />
+                <textarea name="metadata" rows="5" cols="40" maxlength="10000" required>{{ benchmark.metadata }}</textarea>
+            </p>
+
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            <input type="submit" value="Lähetä" />
+        </form>
+        <form action="/cancel_benchmark/{{ benchmark.id }}" method="post">
+           <input type="submit" value="Peruuta ja palaa" /> 
+        </form>
+    </body>
+</html>

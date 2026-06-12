@@ -75,3 +75,7 @@ def get_benchmark(benchmark_id):
 def remove_benchmark(benchmark_id):
     sql = "DELETE FROM benchmarks WHERE id = ?"
     db.execute(sql, [benchmark_id])
+
+def update_benchmark(benchmark_id, name, execution_time, metadata):
+    sql = "UPDATE benchmarks SET name = ?, execution_time = ?, metadata = ?  WHERE id = ?"
+    db.execute(sql, [name, execution_time, metadata, benchmark_id])

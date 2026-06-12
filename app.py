@@ -145,6 +145,31 @@ def edit_algorithm(algo_id):
         algorithms.update_algorithm(algo["id"], algo_name, source_code, session["username"])
         return redirect("/algorithm/" + str(algo["id"]))
     
+@app.route("/edit_benchmark/<int:benchmark_id>", methods=["GET", "POST"])
+def edit_benchmark(benchmark_id):
+    benchmark = algorithms.get_benchmark(benchmark_id)
+
+    if not benchmark:
+        abort(404)
+
+    if benchmark["username"] != session.get("username"):
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("edit_benchmark.html", benchmark=benchmark)
+    
+    if request.method == "POST":
+        check_csrf()
+        benchmark_name = request.form["benchmark_name"]
+        execution_time = request.form["execution_time"]
+        execution_time = validate_float(execution_time)
+        metadata = request.form["metadata"]
+
+        if not execution_time or len(benchmark_name) > 100 or len(metadata) > 1000:
+            abort(403)
+        algorithms.update_benchmark(benchmark["id"], benchmark_name, execution_time, metadata)
+        return redirect("/benchmark/" + str(benchmark["id"]))
+    
 @app.route("/search")
 def search():
     query = request.args.get("query")

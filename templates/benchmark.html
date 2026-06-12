@@ -20,7 +20,7 @@
 
         {% if benchmark.username == session.username %}
         <p>
-            
+            <a href="/edit_benchmark/{{ benchmark.id }}">Muokkaa</a>
             <a href="/remove_benchmark/{{ benchmark.id }}">Poista</a>
         </p>
         {% endif %}
