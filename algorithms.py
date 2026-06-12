@@ -27,6 +27,9 @@ def remove_algorithm(algo_id):
     sql = "DELETE FROM algorithm_classes WHERE algo_id = ?"
     db.execute(sql, [algo_id])
 
+    sql = "DELETE FROM benchmarks WHERE algo_id = ?"
+    db.execute(sql, [algo_id])
+
     sql = "DELETE FROM algorithms WHERE id = ?"
     db.execute(sql, [algo_id])
 
