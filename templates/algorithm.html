@@ -32,7 +32,7 @@
             <ul>
                 {% for benchmark in benchmarks %}
                 <li>
-                    {{ benchmark.metadata}} - lisännyt <a href="/user/{{ benchmark.username }}">{{ benchmark.username }}</a>
+                    <a href="/benchmark/{{ benchmark.id }}">{{ benchmark.name }}</a> - lisännyt <a href="/user/{{ benchmark.username }}">{{ benchmark.username }}</a>
                     ({{ benchmark.sent_at }})
                 </li>
                 {% endfor %}

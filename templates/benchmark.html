@@ -1,0 +1,31 @@
+<html>
+    <head>Testiajo</head>
+
+    <body>
+        <p>Testiajon nimi: {{ benchmark.name }}</p>
+
+        <p>
+            Lisännyt käyttäjä: 
+            <a href="/user/{{ benchmark.username }}">{{ benchmark.username }}</a>
+        </p>
+
+        <p>
+            Ajoaika: {{ benchmark.execution_time }} s
+        </p>
+
+        <p>Testiajon tiedot:
+            <br />
+            {{ benchmark.metadata | show_lines }}
+        </p>
+
+        {% if benchmark.username == session.username %}
+        <p>
+            <!--<a href="/edit/{{ algo.id }}">Muokkaa</a>
+            <a href="/remove/{{ algo.id }}">Poista</a>-->
+        </p>
+        {% endif %}
+        <p>
+            <a href="/">Etusivulle</a>
+        </p>
+    </body>
+</html>

@@ -68,6 +68,13 @@ def remove(algo_id):
         algorithms.remove_algorithm(algo_id)
         return redirect("/")
     
+@app.route("/benchmark/<int:benchmark_id>")
+def show_benchmark(benchmark_id):
+    benchmark = algorithms.get_benchmark(benchmark_id)
+    if not benchmark:
+        abort(404)
+    return render_template("benchmark.html", benchmark=benchmark)
+    
 @app.route("/new_benchmark", methods=["POST"])
 def new_benchmark():
 
