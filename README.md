@@ -7,8 +7,8 @@ Sovellus omien algoritmien ja testiajojen tietojen tallentamiseen sekä vertailu
 - Käyttäjä pystyy tarkastelemaan muiden käyttäjien algoritmeja sekä testiajoja
 - Käyttäjä pystyy hakemaan muiden käyttäjien algoritmeja hakusanoilla 
 - Käyttäjä pystyy lisäämään muiden algoritmeihin omia testiajoja
-- Sovellus näyttää käyttäjän tilastoja algoritmeista ja testiajoista
-- Algoritmeja voidaan luokitella eri ohjelmointikielen perusteella, kieliluokat on määritetty omassa taulussa
+- Sovellus näyttää käyttäjän tilastoja algoritmeista ja testiajoista käyttäjäsivulla
+- Algoritmeja voidaan luokitella ohjelmointikielen perusteella, kieliluokat on määritelty tietokannassa
 
 ## Sovelluksen asennus
 Asenna `flask`-kirjasto:
