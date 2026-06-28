@@ -28,7 +28,7 @@ def new_algorithm():
         source_code = request.form["source_code"].strip()
         input_classes = request.form.getlist("classes")
         
-        if len(input_classes[0]) < 1:
+        if len(input_classes[0]) < 1 or len(algo_name) < 1:
             abort(403)
 
         classes = []
@@ -91,7 +91,7 @@ def new_benchmark():
         user_id = users.get_user_id(username)[0]
         algo_id = int(request.form["algo_id"])
 
-        if not execution_time or len(benchmark_name) > 100 or len(metadata) > 1000:
+        if not execution_time or len(benchmark_name) > 100 or len(metadata) > 1000 or len(benchmark_name) < 1:
             abort(403)
         try:
             algorithms.add_benchmark(user_id, algo_id, benchmark_name, execution_time, metadata)
@@ -143,7 +143,7 @@ def edit_algorithm(algo_id):
         check_csrf()
         algo_name = request.form["name"].strip()
         source_code = request.form["source_code"].strip()
-        if not algo_name or len(algo_name) > 100 or len(source_code) > 10000:
+        if not algo_name or len(algo_name) > 100 or len(source_code) > 10000 or len(algo_name) < 1:
             abort(403)
         algorithms.update_algorithm(algo["id"], algo_name, source_code, session["username"])
         return redirect("/algorithm/" + str(algo["id"]))
@@ -168,7 +168,7 @@ def edit_benchmark(benchmark_id):
         execution_time = validate_float(execution_time)
         metadata = request.form["metadata"].strip()
 
-        if not execution_time or len(benchmark_name) > 100 or len(metadata) > 1000:
+        if not execution_time or len(benchmark_name) > 100 or len(metadata) > 1000 or len(benchmark_name) < 1:
             abort(403)
         algorithms.update_benchmark(benchmark["id"], benchmark_name, execution_time, metadata)
         return redirect("/benchmark/" + str(benchmark["id"]))
