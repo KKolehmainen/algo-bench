@@ -24,8 +24,8 @@ def new_algorithm():
     
     if request.method == "POST":
         check_csrf()
-        algo_name = request.form["algo_name"]
-        source_code = request.form["source_code"]
+        algo_name = request.form["algo_name"].strip()
+        source_code = request.form["source_code"].strip()
         input_classes = request.form.getlist("classes")
         
         if len(input_classes[0]) < 1:
@@ -83,10 +83,10 @@ def new_benchmark():
 
     if request.method == "POST":
         check_csrf()
-        benchmark_name = request.form["benchmark_name"]
-        execution_time = request.form["execution_time"]
+        benchmark_name = request.form["benchmark_name"].strip()
+        execution_time = request.form["execution_time"].strip()
         execution_time = validate_float(execution_time)
-        metadata = request.form["metadata"]
+        metadata = request.form["metadata"].strip()
         username = session["username"]
         user_id = users.get_user_id(username)[0]
         algo_id = int(request.form["algo_id"])
@@ -141,8 +141,8 @@ def edit_algorithm(algo_id):
     
     if request.method == "POST":
         check_csrf()
-        algo_name = request.form["name"]
-        source_code = request.form["source_code"]
+        algo_name = request.form["name"].strip()
+        source_code = request.form["source_code"].strip()
         if not algo_name or len(algo_name) > 100 or len(source_code) > 10000:
             abort(403)
         algorithms.update_algorithm(algo["id"], algo_name, source_code, session["username"])
@@ -163,10 +163,10 @@ def edit_benchmark(benchmark_id):
     
     if request.method == "POST":
         check_csrf()
-        benchmark_name = request.form["benchmark_name"]
-        execution_time = request.form["execution_time"]
+        benchmark_name = request.form["benchmark_name"].strip()
+        execution_time = request.form["execution_time"].strip()
         execution_time = validate_float(execution_time)
-        metadata = request.form["metadata"]
+        metadata = request.form["metadata"].strip()
 
         if not execution_time or len(benchmark_name) > 100 or len(metadata) > 1000:
             abort(403)
@@ -197,7 +197,7 @@ def login():
             return render_template("login.html")
     
     if request.method == "POST":
-        username = request.form["username"]
+        username = request.form["username"].strip()
         password = request.form["password"]
 
         if users.check_login(username, password):
@@ -220,7 +220,7 @@ def register():
         return render_template("register.html")
     
     if request.method == "POST":
-        username = request.form["username"]
+        username = request.form["username"].strip()
         password1 = request.form["password1"]
         password2 = request.form["password2"]
 
@@ -228,7 +228,10 @@ def register():
             flash("VIRHE: salasanat eivät täsmänneet")
             return redirect("/register")
         
-
+        if len(username) < 1:
+            flash("VIRHE: käyttäjätunnus ei voi olla tyhjä")
+            return redirect("/register")
+        
         try:
             users.create_user(username, password1)
         except sqlite3.IntegrityError:
