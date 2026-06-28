@@ -27,6 +27,9 @@ def new_algorithm():
         algo_name = request.form["algo_name"]
         source_code = request.form["source_code"]
         input_classes = request.form.getlist("classes")
+        
+        if len(input_classes[0]) < 1:
+            abort(403)
 
         classes = []
         if input_classes:

@@ -14,7 +14,7 @@
         <p>
             {% for class in all_classes %}
                 {{ class }}:
-                <select name="classes">
+                <select name="classes" required>
                 <option value="">(valitse)</option>
                 {% for option in all_classes[class] %}
                 <option value="{{ class }}:{{ option }}">{{ option }}</option>
